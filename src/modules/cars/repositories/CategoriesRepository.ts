@@ -1,12 +1,7 @@
 import {Category} from "../model/Category";
+import {ICategoriesRepository, ICategorieDTO} from "../repositories/ICategoriesRepository";
 
-// Conceito DTO => Data transfer object
-interface ICreateCategoryDTO {
-    name: string;
-    description: string;
-}
-
-class CategoriesRepository{
+class CategoriesRepository implements ICategoriesRepository{
     private categories: Category[];
 
     constructor(){
@@ -14,7 +9,7 @@ class CategoriesRepository{
     }
 
     //As rotas não precisam conhecer o model, por isso é abstraído com uma interface
-    create({ description, name }: ICreateCategoryDTO): void{
+    create({ description, name }: ICategorieDTO): void{
         const category = new Category();
 
         //função no javascript para adicionar valores em objetos
