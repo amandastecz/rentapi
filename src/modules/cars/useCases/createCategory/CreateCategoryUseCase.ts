@@ -1,4 +1,4 @@
-import { ICategoriesRepository } from '../repositories/ICategoriesRepository';
+import { ICategoriesRepository } from '../../repositories/ICategoriesRepository';
 
 interface IRequest {
     name: string;
@@ -11,7 +11,7 @@ interface IRequest {
  * [X] - Acessar o repositório
  */
 
-class CreateCategoryService{
+class CreateCategoryUseCase{
 
     // abstrai repository pra dar o NEW pra quem chama o service!
     constructor(private categoriesRepository: ICategoriesRepository){}
@@ -31,4 +31,4 @@ class CreateCategoryService{
     }
 }
 
-export { CreateCategoryService };
+export { CreateCategoryUseCase };
