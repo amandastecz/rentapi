@@ -7,9 +7,9 @@ interface ICategorieDTO {
 }
 
 interface ICategoriesRepository {
-    create({ description, name }: ICategorieDTO): void;
-    list(): Category[];
+    create({ name, description }: ICategorieDTO): void;
     findByName(name: string): Category;
+    list(): Category[];
     
 }
 

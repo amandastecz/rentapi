@@ -5,28 +5,19 @@ interface IRequest {
     description: string;
 }
 
-/**
- * [X] - Definir tipo de retorno
- * [X] - Alterar o retorno de erro
- * [X] - Acessar o repositório
- */
-
 class CreateCategoryUseCase{
-
-    // abstrai repository pra dar o NEW pra quem chama o service!
     constructor(private categoriesRepository: ICategoriesRepository){}
 
-    execute({description, name}: IRequest): void{
+    execute({name, description}: IRequest): void{
         const categoryAlreadyExists = this.categoriesRepository.findByName(name);
 
         if(categoryAlreadyExists){
-            // Service não conhece o request, response!
-            //return response.status(400).json({error: "Category already exists!"})
             throw new Error("Category already exists!")
         };
     
         this.categoriesRepository.create({ 
-            name, description 
+            name, 
+            description,
         });
     }
 }

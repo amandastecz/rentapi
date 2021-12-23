@@ -1,11 +1,24 @@
 import {Category} from "../model/Category";
 import {ICategoriesRepository, ICategorieDTO} from "../repositories/ICategoriesRepository";
 
+//singleton
+
 class CategoriesRepository implements ICategoriesRepository{
     private categories: Category[];
 
-    constructor(){
+    private static INSTANCE: CategoriesRepository;
+
+    //deixar como privado o construtor vai fazer com que apenas essa classe possa instanciar esse repository
+    private constructor(){
         this.categories = [];
+    }
+
+    public static getInstance(): CategoriesRepository{
+        if(!CategoriesRepository.INSTANCE){
+            CategoriesRepository.INSTANCE = new CategoriesRepository();
+        }
+
+        return CategoriesRepository.INSTANCE;
     }
 
     //As rotas não precisam conhecer o model, por isso é abstraído com uma interface
@@ -29,7 +42,6 @@ class CategoriesRepository implements ICategoriesRepository{
 
     findByName(name: string): Category{
         const category = this.categories.find(category => category.name === name);
-
         return category;
     }
 }

@@ -1,12 +1,13 @@
 ## Estudos NodeJs - Rent API
 
-Estudando conceitos do Typescript, API Rest com NodeJS e Arquitetura limpa com S.O.L.I.D;
+Estudando conceitos do Typescript, API Rest com NodeJS, Arquitetura limpa com S.O.L.I.D, singleton;
 
 ### Estrutura do Projeto
-[X] Routes --> Rotas da minha aplicação
-[X] Services --> Regras de negócio da minha aplicação
-[X] Model --> Modelo dos meus dados (entidades)
-[X] Repository --> Interage com meus dados no DB
+- [X] Routes --> Rotas da minha aplicação
+- [X] UseCases --> Regras de negócio da minha aplicação
+-- [X] Controllers --> Request e response; interação com repository
+- [X] Model --> Estrutura dos dados (modelagem das entidades)
+- [X] Repositories --> Contratos de interfaces de banco de dados e métodos interativos com o banco de dados
 
 ### Observações
 - Routes não conhece Models, fica abstraído com DTO(interface para objetos vindos da requisição) no Repository
