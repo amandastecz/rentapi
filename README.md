@@ -16,6 +16,14 @@ Estudando conceitos do Typescript, API Rest com NodeJS, Arquitetura limpa com S.
 - [] I: ISP
 - [X] D: DIP: Dependency Inversion Principle - Princípio da Inversão da Dependência, significa também que o que está em alto nível não precisa conhecer o que está em baixo nível, ou seja, services não precisam conhecer o repository, a responsabilidade passa para quem chama o service
 
-
 ### Outras observações
 - DTO(interface para objetos vindos da requisição) no Repository
+
+
+### Docker
+- Para executar a imagem da aplicação: docker-compose up
+
+up: Cria o container.
+down: Remove o container.
+start: Inicia o container
+stop: Para o container.
