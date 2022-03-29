@@ -23,7 +23,9 @@ Estudando conceitos do Typescript, API Rest com NodeJS, Arquitetura limpa com S.
 ### Docker
 - Para executar a imagem da aplicação: docker-compose up
 
-up: Cria o container.
-down: Remove o container.
-start: Inicia o container
-stop: Para o container.
+- up: Cria o container.
+- down: Remove o container.
+- start: Inicia o container
+- stop: Para o container.
+
+- Dockerfile serve para criar uma imagem da aplicação, enquanto no docker-compose podemos utilizar essa imagem e outras já existentes, como postgres, por exemplo.
