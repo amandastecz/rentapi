@@ -1,4 +1,4 @@
-import {Category} from '../model/Category'
+import {Category} from '../entities/Category'
 
 // Conceito DTO => Data transfer object
 interface ICategorieDTO {
@@ -7,9 +7,9 @@ interface ICategorieDTO {
 }
 
 interface ICategoriesRepository {
-    create({ name, description }: ICategorieDTO): void;
-    findByName(name: string): Category;
-    list(): Category[];
+    create({ name, description }: ICategorieDTO): Promise<void>;
+    findByName(name: string): Promise<Category>;
+    list(): Promise<Category[]>;
     
 }
 
