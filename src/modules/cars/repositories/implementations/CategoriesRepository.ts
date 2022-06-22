@@ -1,46 +1,35 @@
-import {Category} from "../../model/Category";
+import { getRepository, Repository } from "typeorm";
+import {Category} from "../../entities/Category";
 import {ICategoriesRepository, ICategorieDTO} from "../ICategoriesRepository";
 
 class CategoriesRepository implements ICategoriesRepository{
-    private categories: Category[];
 
-    private static INSTANCE: CategoriesRepository;
-
+    private repository: Repository<Category>;
+    
     //deixar como privado o construtor vai fazer com que apenas essa classe possa instanciar esse repository
-    private constructor(){
-        this.categories = [];
-    }
-
-    //singleton
-    public static getInstance(): CategoriesRepository{
-        if(!CategoriesRepository.INSTANCE){
-            CategoriesRepository.INSTANCE = new CategoriesRepository();
-        }
-
-        return CategoriesRepository.INSTANCE;
+    constructor(){
+        this.repository = getRepository(Category);
     }
 
     //As rotas não precisam conhecer o model, por isso é abstraído com uma interface
-    create({ description, name }: ICategorieDTO): void{
-        const category = new Category();
-
-        //função no javascript para adicionar valores em objetos
-        Object.assign(category, {
-            name,
+    async create({ description, name }: ICategorieDTO): Promise<void>{
+        const category = this.repository.create({
             description,
-            created_at: new Date()
-        })
+            name
+        });
 
         //adiciona no "DB"    
-        this.categories.push(category);
+        await this.repository.save(category)
     };
 
-    list(): Category[]{
-        return this.categories;
+    async list(): Promise<Category[]>{
+        const categories = await this.repository.find();
+        return categories; 
     };
 
-    findByName(name: string): Category{
-        const category = this.categories.find(category => category.name === name);
+    async findByName(name: string): Promise<Category>{
+        // select * from categories where name = "name" limit 1
+        const category = await this.repository.findOne({ name });
         return category;
     }
 }
