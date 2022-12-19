@@ -13,7 +13,7 @@ describe("Create Car", () => {
     });
 
     it("should be able to create a new car", async () => {
-        const newCar = {
+        const newCar = await createCar.execute({
             name: "New Car",
             description: "GLC 300",
             daily_rate: 100,
@@ -21,20 +21,9 @@ describe("Create Car", () => {
             fine_amount: 60,
             brand: "Brand",
             category_id: "category"
-        };
-        await createCar.execute({
-            name: newCar.name,
-            description: newCar.description,
-            daily_rate: newCar.daily_rate,
-            license_plate: newCar.license_plate,
-            fine_amount: newCar.fine_amount,
-            brand: newCar.brand,
-            category_id: newCar.category_id,
         });
 
-       // const carCreated = await carsRepositoryInMemory.findByLicensePlate(newCar.license_plate);
-
-       // expect(carCreated).toHaveProperty("id");
+        expect(newCar).toHaveProperty("id");
     });
 
     it("should not to be able to create a car with an existent license plate", async () => {
@@ -59,5 +48,19 @@ describe("Create Car", () => {
                 category_id: "category"
             });
         }).rejects.toBeInstanceOf(AppError);
+    });
+
+    it("should be able to create a new car with available true by default", async () => {
+        const car =  await createCar.execute({
+            name: "Car Available",
+            description: "GLC 300",
+            daily_rate: 100,
+            license_plate: "888888ACB",
+            fine_amount: 60,
+            brand: "Brand",
+            category_id: "category"
+        });
+
+        expect(car.available).toBe(true);
     });
 })
