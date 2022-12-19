@@ -1,4 +1,5 @@
 import { inject, injectable } from "tsyringe";
+import { AppError } from "../../../../shared/errors/AppError";
 import { ICarsRepository } from "../../repositories/ICarsRepository";
 
 interface IRequest {
@@ -19,8 +20,33 @@ class CreateCarUseCase {
         private carsRepository: ICarsRepository
     ){}
 
-    async execute({ name, description, daily_rate,license_plate,fine_amount, brand, category_id} : IRequest): Promise<void> {
+    async execute({ 
+        name, 
+        description, 
+        daily_rate,
+        license_plate,
+        fine_amount,
+        brand, 
+        category_id,
+    } : IRequest): Promise<void> {
 
+        const carAlreadyExists = await this.carsRepository.findByLicensePlate(
+            license_plate
+        );
+
+        if(carAlreadyExists){
+            throw new AppError("Car already exists! Found a same license plate")
+        }
+
+        await this.carsRepository.create({ 
+            name, 
+            description, 
+            daily_rate,
+            license_plate,
+            fine_amount,
+            brand, 
+            category_id,
+        });
     }
 }
 
