@@ -24,6 +24,6 @@ container.registerSingleton<IUsersRepository>(
 );
 
 container.registerSingleton<ICarsRepository>(
-    "CarsReposistory",
+    "CarsRepository",
     CarsRepository
 )

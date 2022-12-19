@@ -3,7 +3,7 @@ import { AuthenticateUserController } from "../../../../modules/accounts/useCase
 
 const authenticateRoutes = Router();
 
-const authenticateUserController = new AuthenticateUserController;
+const authenticateUserController = new AuthenticateUserController();
 
 authenticateRoutes.post("/sessions", authenticateUserController.handle);
 
