@@ -17,7 +17,7 @@ class UploadCarImagesUseCase{
         car_id,
         images_name
     }: IRequest): Promise<void>{
-        images_name.map(async image => {
+        images_name.map(async (image) => {
             await this.carsImagesRepository.create(
                 car_id,
                 image
