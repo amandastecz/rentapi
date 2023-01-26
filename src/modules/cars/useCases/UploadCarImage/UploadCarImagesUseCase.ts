@@ -9,7 +9,7 @@ interface IRequest {
 @injectable()
 class UploadCarImagesUseCase{
     constructor(
-        @inject("CarsImageRepository") //TODO
+        @inject("CarImagesRepository") //TODO
         private carsImagesRepository: ICarsImagesRepository
     ){}
 
