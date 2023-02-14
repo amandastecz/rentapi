@@ -35,7 +35,8 @@ class CreateRentalUseCase{
         }
 
         const compare = this.dateProvider.compareInHours(
-            expected_return_date, this.dateProvider.dateNow()
+            this.dateProvider.dateNow(),
+            expected_return_date,
         )
 
         if(compare < minimumHour){
