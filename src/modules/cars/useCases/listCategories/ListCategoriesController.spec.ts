@@ -18,10 +18,6 @@ describe("List Categories Controller", ()=>{
         )
     });
 
-    afterAll(async () => {
-        await connection.dropDatabase();
-        await connection.close();
-    })
     it("should be able to list all categories", async ()=>{
         const response = await request(app).get("/categories");
         expect(response.status).toBe(200);
@@ -29,5 +25,10 @@ describe("List Categories Controller", ()=>{
         expect(response.body[0]).toHaveProperty("id");
 
         console.log(response.body)
+    })
+    
+    afterAll(async () => {
+        await connection.dropDatabase();
+        await connection.close();
     })
 })
