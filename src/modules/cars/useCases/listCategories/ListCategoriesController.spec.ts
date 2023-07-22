@@ -23,8 +23,6 @@ describe("List Categories Controller", ()=>{
         expect(response.status).toBe(200);
         expect(response.body.length).toBe(1);
         expect(response.body[0]).toHaveProperty("id");
-
-        console.log(response.body)
     })
     
     afterAll(async () => {
