@@ -14,6 +14,9 @@
                 "tags": ["Category"],
                 "summary": "Create a category",
                 "description": "Create a new category",
+                "security": [
+                { "bearerAuth": []}
+                ],
                 "requestBody": {
                     "content":{
                         "application/json":{
@@ -53,21 +56,22 @@
                         "description": "Success",
                         "content": {
                             "application/json":{
-                                "schema":{
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "name":{
-                                                "type": "string"
-                                            },
-                                            "description":{
-                                                "type": "string"
-                                            }
+                                "schema":{ 
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "description":{
+                                            "type": "string"
                                         }
+                                    },
+                                    "example": {
+                                        "name": "Specification name sample",
+                                        "description": "Specification description sample"
                                     }
                                 }
-                            }                        }
+                            }                      }
                     }
                 }
             }
@@ -77,6 +81,9 @@
                 "tags": ["Category"],
                 "summary": "Create a category by importing",
                 "description": "Create a category by importing a csv file",
+                "security": [
+                    { "bearerAuth": []}
+                ],
                 "requestBody": {
                     "content": {
                         "multipart-form-data":{
@@ -104,6 +111,9 @@
                 "tags": ["Specification"],
                 "summary": "Create a specification",
                 "description": "Create a new specification",
+                "security": [
+                    { "bearerAuth": []}
+                ],
                 "requestBody": {
                     "content":{
                         "application/json":{
@@ -123,6 +133,93 @@
                 }
             }
         },
+        "/sessions": {
+            "post": {
+                "tags": ["Session"],
+                "summary": "Auth user",
+                "description": "Auth user",
+                "requestBody": {
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "email":{
+                                        "type":"string"
+                                    },
+                                    "password":{
+                                        "type":"string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Email or password incorrect!"
+                    }
+                }
+            }
+        },
+        "/cars":{
+            "post":{
+                "tags": ["Cars"],
+                "summary": "Create a car",
+                "description": "Create a new car",
+                "security": [
+                { "bearerAuth": []}
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/definitions/Car"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Car already exists!"
+                    }
+                }
+            },
+            "get":{
+                "tags": ["Category"],
+                "summary": "List all categories",
+                "description": "List all categories",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json":{
+                                "schema":{ 
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "description":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "name": "Specification name sample",
+                                        "description": "Specification description sample"
+                                    }
+                                }
+                            }                      }
+                    }
+                }
+            }
+        },
         "definitions": {
             "Specification": { 
                 "type": "object",
@@ -137,6 +234,50 @@
                 "example": {
                     "name": "Specification name sample",
                     "description": "Specification description sample"
+                }
+            },
+            "Car": { 
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description":{
+                        "type": "string"
+                    },
+                    "daily_rate": {
+                        "type": "string"
+                    },
+                    "license_plate": {
+                        "type": "string"
+                    },
+                    "fine_amount": {
+                        "type": "number"
+                    },
+                    "brand": {
+                        "type": "string"
+                    },
+                    "category_id": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "name": "Car sample",
+                    "description": "Car sample",
+                    "daily_rate": "Car sample",
+                    "license_plate": "Car sample",
+                    "fine_amount": "100",
+                    "brand": "Car sample",
+                    "category_id": "Car sample"
+                }
+            }
+        },
+        "components": {
+            "securitySchemes": {
+                "bearerAuth": {
+                    "type": "http",
+                    "scheme": "bearer",
+                    "bearerFormat": "JWT"
                 }
             }
         }
