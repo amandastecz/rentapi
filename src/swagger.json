@@ -190,34 +190,6 @@
                         "description": "Car already exists!"
                     }
                 }
-            },
-            "get":{
-                "tags": ["Category"],
-                "summary": "List all categories",
-                "description": "List all categories",
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json":{
-                                "schema":{ 
-                                    "type": "object",
-                                    "properties": {
-                                        "name": {
-                                            "type": "string"
-                                        },
-                                        "description":{
-                                            "type": "string"
-                                        }
-                                    },
-                                    "example": {
-                                        "name": "Specification name sample",
-                                        "description": "Specification description sample"
-                                    }
-                                }
-                            }                      }
-                    }
-                }
             }
         },
         "/cars/images/{id}":{
@@ -260,34 +232,6 @@
                 "responses": {
                     "201": {
                         "description": "Created"
-                    }
-                }
-            },
-            "get":{
-                "tags": ["Category"],
-                "summary": "List all categories",
-                "description": "List all categories",
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json":{
-                                "schema":{ 
-                                    "type": "object",
-                                    "properties": {
-                                        "name": {
-                                            "type": "string"
-                                        },
-                                        "description":{
-                                            "type": "string"
-                                        }
-                                    },
-                                    "example": {
-                                        "name": "Specification name sample",
-                                        "description": "Specification description sample"
-                                    }
-                                }
-                            }                      }
                     }
                 }
             }
