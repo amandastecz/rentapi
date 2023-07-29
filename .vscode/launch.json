@@ -5,15 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "node",
-            "request": "attach",
-            "name": "Launch Program",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "outFiles": [
-                "${workspaceFolder}/**/*.js"
-            ]
+          "type": "node",
+          "request": "attach",
+          "name": "Docker Debugger",
+          "port": 9229,
+          "address": "localhost",
+          "remoteRoot": "/",
+          "sourceMapPathOverrides": {
+            "/usr/app/*": "${workspaceRoot}/*"
+          },
+          "skipFiles": [
+            "<node_internals>/**/*.js"
+          ]
         }
-    ]
+      ]
 }

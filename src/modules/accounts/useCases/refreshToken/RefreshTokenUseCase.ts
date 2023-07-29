@@ -18,7 +18,9 @@ export default class RefreshTokenUseCase {
         const { email, sub }  = verify(token, secret_refresh_token) as IPayload;
         const user_id = sub;
         const userToken = await this.userTokensRepository.findByUserIdAndRefreshToken(user_id, token);
-        if(!userToken)throw new AppError("Refresh Token does not exists!");
+        if(!userToken){
+            throw new AppError("Refresh Token does not exists!")
+        }
         await this.userTokensRepository.deleteById(userToken.id);
         const expires_date = this.dateProvider.addDays(expires_in_refresh_token_days);
         const refresh_token = sign({email}, secret_refresh_token, {
