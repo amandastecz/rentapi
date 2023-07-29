@@ -7,19 +7,6 @@ import { IUserTokensRepository } from "../../repositories/IUserTokensRepository"
 import auth from "../../../../config/auth";
 import { IDateProvider } from "../../../../shared/container/providers/DateProvider/IDateProvider";
 
-interface IRequest{
-    email: string;
-    password: string;
-}
-
-interface IResponse{
-    user:{
-        name: string,
-        email: string
-    };
-    token: string;
-}
-
 @injectable()
 class AuthenticateUserUseCase{
 
@@ -50,7 +37,7 @@ class AuthenticateUserUseCase{
             subject: user.id,
             expiresIn: expires_in_refresh_token
         })
-        const refresh_token_expires_date = this.dateProvider.AddDays(expires_in_refresh_token_days);
+        const refresh_token_expires_date = this.dateProvider.addDays(expires_in_refresh_token_days);
         await this.userTokensRepository.create({
             user_id: user.id,
             expires_date: refresh_token_expires_date,
@@ -61,10 +48,25 @@ class AuthenticateUserUseCase{
             user: {
                 name: user.name,
                 email: user.email,
-            }
+            },
+            refresh_token,
         }
         return tokenReturn;
     }
 }
 
 export {AuthenticateUserUseCase};
+
+interface IRequest{
+    email: string;
+    password: string;
+}
+
+interface IResponse{
+    user:{
+        name: string,
+        email: string
+    };
+    token: string;
+    refresh_token: string;
+}
