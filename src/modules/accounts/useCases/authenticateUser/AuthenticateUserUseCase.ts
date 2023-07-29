@@ -3,6 +3,9 @@ import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { AppError } from "../../../../shared/errors/AppError";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
+import { IUserTokensRepository } from "../../repositories/IUserTokensRepository";
+import auth from "../../../../config/auth";
+import { IDateProvider } from "../../../../shared/container/providers/DateProvider/IDateProvider";
 
 interface IRequest{
     email: string;
@@ -22,28 +25,37 @@ class AuthenticateUserUseCase{
 
     constructor(
         @inject("UsersRepository")
-        private usersRepository: IUsersRepository
+        private usersRepository: IUsersRepository,
+        @inject("UserTokensRepository")
+        private userTokensRepository: IUserTokensRepository,
+        @inject("DayjsDateProvider")
+        private dateProvider: IDateProvider
     ){};
 
     async execute({email, password}: IRequest): Promise<IResponse>{
-        //Usuário existe?
         const user = await this.usersRepository.findByEmail(email);
+        const {secret_token, secret_refresh_token, expires_in_token, expires_in_refresh_token, expires_in_refresh_token_days} = auth
         if(!user){
             throw new AppError("Email or password incorrect!");            
         }
-
-        //Senha está correta?
         const passwordMatch = await compare(password, user.password);
         if(!passwordMatch){
             throw new AppError("Email or password incorrect!");   
         }
-
-        //Caso e-mail e senha ok, pode gerar JsonWebToken (JWT)
-        const token = sign({}, "39505368546302be2704b3d53b24203c", {
+        const token = sign({}, secret_token, {
             subject: user.id,
-            expiresIn: "1d"
+            expiresIn: expires_in_token
         })
-
+        const refresh_token = sign({email}, secret_refresh_token, {
+            subject: user.id,
+            expiresIn: expires_in_refresh_token
+        })
+        const refresh_token_expires_date = this.dateProvider.AddDays(expires_in_refresh_token_days);
+        await this.userTokensRepository.create({
+            user_id: user.id,
+            expires_date: refresh_token_expires_date,
+            refresh_token
+        })
         const tokenReturn:IResponse = {
             token, 
             user: {
@@ -51,9 +63,7 @@ class AuthenticateUserUseCase{
                 email: user.email,
             }
         }
-
         return tokenReturn;
-
     }
 }
 
