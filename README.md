@@ -1,35 +1,27 @@
-## Estudos NodeJs - Rent API
+## NodeJs - Rent API
 
-Estudando conceitos do Typescript, API Rest com NodeJS, Arquitetura limpa com S.O.L.I.D, Documentação com Swagger, Importação e leitura de arquivos em stream;
+This project is part of a series of personal studies I'm doing on Node.js. This project is being developed with Typescript, Rest API, Clean Architecture and S.O.L.I.D principles, importing and reading files in stream; communication with PostgreSQL database through TypeORM; containerization with Docker in addition to all the API documentation with Swagger
 
-### Estrutura do Projeto
+### Project Structure
 
-- Model --> Estrutura dos dados (modelagem das entidades)
-- Repositories --> Contratos de interfaces de banco de dados e métodos interativos com o banco de dados
-- UseCases --> Regras de negócio da minha aplicação: Controllers e Services 
-- Routes --> Rotas da minha aplicação
+- Model --> Data structure (entity modeling)
+- Repositories --> Database interface contracts and database interactive methods
+- UseCases --> My application's business rules: Controllers and Services
+- Routes --> My application's routes
 
 ### SOLID - Robert C. Martin (Uncle Bob)
-- [X] S: SRP: Single Responsability Principle - Responsabilidade única (separação por contexto)
-- [] O: OCP 
-- [X] L: LSP: Liskov Substitution Principle - Princípio da Substituição de Liskov, fala sobre o uso de contratos (classo implementando interfaces)!
-- [] I: ISP
-- [X] D: DIP: Dependency Inversion Principle - Princípio da Inversão da Dependência, significa também que o que está em alto nível não precisa conhecer o que está em baixo nível, ou seja, services não precisam conhecer o repository, a responsabilidade passa para quem chama o service
-
-### Outras observações
-- DTO(interface para objetos vindos da requisição) no Repository
-
+- [X] S: SRP: Single Responsibility Principle - Single responsibility (separation by context)
+- [X] L: LSP: Liskov Substitution Principle - Liskov Substitution Principle, talks about using contracts (class implementing interfaces)!
+- [X] D: DIP: Dependency Inversion Principle - Dependency Inversion Principle, also means that what is at a high level does not need to know what is at a low level, that is, services do not need to know the repository, the responsibility passes for who calls the service
 
 ### Docker
-- Para executar a imagem da aplicação: `docker-compose up`
+- To run the application image: `docker-compose up`
 
-- up: Cria o container.
-- down: Remove o container.
-- start: Inicia o container
-- stop: Para o container.
-
-- Dockerfile serve para criar uma imagem da aplicação, enquanto no docker-compose podemos utilizar essa imagem e outras já existentes, como postgres, por exemplo.
+- up: Creates the container.
+- down: Removes the container.
+- start: Starts the container
+- stop: Stops the container.
 
 ### Migrations
-- Para criar uma migration execute: `yarn run typeorm migration:create -n CreateCategories` 
-- Para executar a migration execute: `yarn run typeorm migration:run` 
+- To create a migration run: `yarn run typeorm migration:create -n CreateCategories`
+- To run the migration run: `yarn run typeorm migration:run`
