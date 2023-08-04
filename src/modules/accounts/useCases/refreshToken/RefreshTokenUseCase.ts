@@ -13,8 +13,8 @@ export default class RefreshTokenUseCase {
         @inject("DayjsDateProvider")
         private dateProvider: IDateProvider
     ){}
-    async execute(token: string): Promise<string>{
-        const {secret_refresh_token, expires_in_refresh_token, expires_in_refresh_token_days} = auth
+    async execute(token: string): Promise<ITokenRespose>{
+        const {secret_refresh_token, expires_in_refresh_token, expires_in_refresh_token_days, secret_token, expires_in_token} = auth
         const { email, sub }  = verify(token, secret_refresh_token) as IPayload;
         const user_id = sub;
         const userToken = await this.userTokensRepository.findByUserIdAndRefreshToken(user_id, token);
@@ -32,11 +32,24 @@ export default class RefreshTokenUseCase {
             expires_date,
             refresh_token
         });
-        return refresh_token;
+        const newToken = sign({}, secret_token, {
+            subject: user_id,
+            expiresIn: expires_in_token
+        });
+
+        return {
+            token: newToken,
+            refresh_token
+        };
     }
 }
 
 interface IPayload {
     sub: string,
     email: string
+}
+
+interface ITokenRespose {
+    token: string,
+    refresh_token: string
 }
