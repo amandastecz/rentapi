@@ -1,6 +1,6 @@
 ## NodeJs - Rent API
 
-This project is part of a series of personal studies on Node.js. This project is being developed with Typescript, applying principles of Clean Architecture and S.O.L.I.D, API Rest, , import and reading of files in stream; communication with PostgreSQL database through TypeORM; containerization with Docker in addition to all the API documentation with Swagger and automated tests at unit level and integration with Jest Framework.
+This project is part of a series of personal studies on Node.js. This project is being developed with Typescript, applying principles of Clean Architecture and S.O.L.I.D, API Rest, import and reading of files in stream, communication with PostgreSQL database through TypeORM, containerization with Docker, refresh token with JWT authentication, in addition to all the API documentation with Swagger and automated tests at unit and integration level with Jest Framework.
 
 ### SOLID - Robert C. Martin (Uncle Bob) - Applied Principles
 - [X] S: SRP: Single Responsibility Principle - Single responsibility (separation by context)
@@ -10,10 +10,10 @@ This project is part of a series of personal studies on Node.js. This project is
 ### Docker
 - To run the application image: `docker-compose up`
 
-- up: Creates the container.
-- down: Removes the container.
+- up: Creates the container
+- down: Removes the container
 - start: Starts the container
-- stop: Stops the container.
+- stop: Stops the container
 
 ### Migrations
 - To create a migration run: `yarn run typeorm migration:create -n CreateCategories`
