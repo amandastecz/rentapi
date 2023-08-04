@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { v4 as uuidv4 } from "uuid";
 import { resolve } from "path";
+import 'dotenv/config';
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 import { IUserTokensRepository } from "../../repositories/IUserTokensRepository";
 import { AppError } from "../../../../shared/errors/AppError";

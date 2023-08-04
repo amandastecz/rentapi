@@ -21,7 +21,7 @@ class EtherealMainProvider implements IMailProvider{
             this.client = transporter;
         }).catch(err => console.error(err));
     }
-
+    
     async sendMail(to: string, subject: string, variables: any, path: string): Promise<void> {
         const templateFileContext = fs.readFileSync(path).toString("utf-8");
         const templateParse = handlebars.compile(templateFileContext);
