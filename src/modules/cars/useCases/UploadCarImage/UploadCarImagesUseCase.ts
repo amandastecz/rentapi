@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { ICarsImagesRepository } from "../../repositories/ICarsImagesRepository";
+import { IStorageProvider } from "../../../../shared/container/providers/StorageProvider/IStorageProvider";
 
 interface IRequest {
     car_id: string;
@@ -9,8 +10,10 @@ interface IRequest {
 @injectable()
 class UploadCarImagesUseCase{
     constructor(
-        @inject("CarImagesRepository") //TODO
-        private carsImagesRepository: ICarsImagesRepository
+        @inject("CarImagesRepository")
+        private carsImagesRepository: ICarsImagesRepository,
+        @inject("StorageProvider")
+        private storageProvider: IStorageProvider
     ){}
 
     async execute({
@@ -21,7 +24,8 @@ class UploadCarImagesUseCase{
             await this.carsImagesRepository.create(
                 car_id,
                 image
-            )
+            );
+            await this.storageProvider.save(image, "cars");
         })
     }
 }
