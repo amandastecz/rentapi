@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { container } from "tsyringe";
 import { IDateProvider } from "./DateProvider/IDateProvider";
 import { DayjsDateProvider } from "./DateProvider/implementations/DayjsDateProvider";
@@ -17,7 +18,12 @@ container.registerInstance<IMailProvider>(
     new EtherealMainProvider()
 );
 
+const diskStorage = {
+    local: LocalStorageProvider,
+    s3: S3StorageProvider
+}
+
 container.registerInstance<IStorageProvider>(
     "StorageProvider",
-    new S3StorageProvider()
+    diskStorage[process.env.disk]
 );
