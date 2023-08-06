@@ -19,8 +19,8 @@ container.registerInstance<IMailProvider>(
 );
 
 const diskStorage = {
-    local: LocalStorageProvider,
-    s3: S3StorageProvider
+    local: new LocalStorageProvider(),
+    s3: new S3StorageProvider()
 }
 
 container.registerInstance<IStorageProvider>(
