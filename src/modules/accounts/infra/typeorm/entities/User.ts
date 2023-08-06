@@ -29,7 +29,7 @@ class User{
     created_at: Date;
 
     @Expose({ name: "avatar_url" })
-    getAvatarUrl(): string {
+    avatar_url(): string {
         switch(process.env.disk){
             case "local":
                 return `${process.env.APP_API_URL}/avatar/${this.avatar}`

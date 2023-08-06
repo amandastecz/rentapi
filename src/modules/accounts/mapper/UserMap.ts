@@ -9,7 +9,7 @@ class UserMap{
         id,
         avatar,
         driver_license,
-        getAvatarUrl
+        avatar_url
     }: User): IUserResponseDTO{
         const user = instanceToInstance({
             email,
@@ -17,7 +17,7 @@ class UserMap{
             id,
             avatar,
             driver_license,
-            getAvatarUrl
+            avatar_url
         })
         return user;
     }
