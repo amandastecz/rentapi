@@ -1,5 +1,5 @@
 ## Wiki
-[For more information, check the project's wiki.](https://github.com/amandastecz/rentapi/wiki/Transpiling-TS)
+[For more information, check the project's wiki.](https://github.com/amandastecz/rentapi/wiki/)
 
 ## NodeJs - Rent API
 
