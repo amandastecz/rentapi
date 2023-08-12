@@ -33,4 +33,18 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           source: "., !node_modules"
-          target: test
+          target: "~/rentapi"
+          
+      - name: Update API
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/rentapi
+            yarn
+            ./node_modules/.bin/typeorm migration:run
+            pm2 restart rentx_api
+            
