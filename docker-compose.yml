@@ -15,7 +15,7 @@ services:
       - pgdata:/data/postgres
 
   redis:
-    image: redis:alphine
+    image: redis:alpine
     ports:
         - 6379:6379
 
