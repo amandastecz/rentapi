@@ -1,6 +1,10 @@
 ## Wiki
 [For more information, check the project's wiki.](https://github.com/amandastecz/rentapi/wiki/)
 
+## API Documentation (under construction)
+
+[To see the swagger of the project click here.](http://18.231.189.148/api-docs/)
+
 ## NodeJs - Rent API
 
 This project is part of a series of personal studies on Node.js. This project is being developed with Typescript, applying principles of Clean Architecture and S.O.L.I.D, API Rest, import and reading of files in stream, communication with PostgreSQL database through TypeORM, containerization with Docker, refresh token with JWT authentication, in addition to all the API documentation with Swagger and automated tests at unit and integration level with Jest Framework.
