@@ -248,33 +248,6 @@
                 ]
             }
         },
-        "/specifications":{
-            "post": {
-                "tags": ["Specification"],
-                "summary": "Create a specification",
-                "description": "Create a new specification",
-                "security": [
-                    { "bearerAuth": []}
-                ],
-                "requestBody": {
-                    "content":{
-                        "application/json":{
-                            "schema":{
-                                "$ref": "#/components/schemas/Specification"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Created"
-                    },
-                    "400": {
-                        "description": "Specification already exists!"
-                    }
-                }
-            }
-        },
         "/password/forgot":{
             "post":{
                 "tags": ["Password"],
@@ -349,7 +322,34 @@
                     }
                 }
             }
-        } ,
+        },
+        "/specifications":{
+            "post": {
+                "tags": ["Specification"],
+                "summary": "Create a specification",
+                "description": "Create a new specification",
+                "security": [
+                    { "bearerAuth": []}
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Specification"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Specification already exists!"
+                    }
+                }
+            }
+        },
         "/users/":{
             "post":{
                 "tags": ["User"],
