@@ -15,7 +15,9 @@
                 "summary": "Create a category",
                 "description": "Create a new category",
                 "security": [
-                { "bearerAuth": []}
+                    {
+                        "bearer": []
+                    }
                 ],
                 "requestBody": {
                     "content":{
@@ -81,9 +83,6 @@
                 "tags": ["Category"],
                 "summary": "Create a category by importing",
                 "description": "Create a category by importing a csv file",
-                "security": [
-                    { "bearerAuth": []}
-                ],
                 "requestBody": {
                     "content": {
                         "multipart-form-data":{
@@ -103,7 +102,10 @@
                     "200": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    { "bearer": []}
+                ]
             }
         },
         "/specification":{
@@ -112,13 +114,13 @@
                 "summary": "Create a specification",
                 "description": "Create a new specification",
                 "security": [
-                    { "bearerAuth": []}
+                    { "bearer": []}
                 ],
                 "requestBody": {
                     "content":{
                         "application/json":{
                             "schema":{
-                                "$ref": "#/definitions/Specification"
+                                "$ref": "#/components/schemas/Specification"
                             }
                         }
                     }
@@ -171,13 +173,13 @@
                 "summary": "Create a car",
                 "description": "Create a new car",
                 "security": [
-                { "bearerAuth": []}
+                { "bearer": []}
                 ],
                 "requestBody": {
                     "content":{
                         "application/json":{
                             "schema":{
-                                "$ref": "#/definitions/Car"
+                                "$ref": "#/components/schemas/Car"
                             }
                         }
                     }
@@ -198,7 +200,7 @@
                 "summary": "Upload images",
                 "description": "Upload images",
                 "security": [
-                { "bearerAuth": []}
+                { "bearer": []}
                 ],
                 "parameters": [
                     {
@@ -235,8 +237,17 @@
                     }
                 }
             }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearer": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+              }
         },
-        "definitions": {
+        "schemas": {
             "Specification": { 
                 "type": "object",
                 "properties": {
@@ -285,15 +296,6 @@
                     "fine_amount": "100",
                     "brand": "Car sample",
                     "category_id": "Car sample"
-                }
-            }
-        },
-        "components": {
-            "securitySchemes": {
-                "bearerAuth": {
-                    "type": "http",
-                    "scheme": "bearer",
-                    "bearerFormat": "JWT"
                 }
             }
         }
