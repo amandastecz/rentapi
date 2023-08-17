@@ -9,6 +9,77 @@
         }
     },
     "paths": {
+        "/cars":{
+            "post":{
+                "tags": ["Cars"],
+                "summary": "Create a car",
+                "description": "Create a new car",
+                "security": [
+                { "bearer": []}
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Car"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Car already exists!"
+                    }
+                }
+            }
+        },
+        "/cars/images/{id}":{
+            "post":{
+                "tags": ["Cars"],
+                "summary": "Upload images",
+                "description": "Upload images",
+                "security": [
+                { "bearer": []}
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Car id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        } 
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "multipart-form-data":{
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "images":{
+                                        "type":"array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
+            }
+        },
         "/categories":{
             "post":{
                 "tags": ["Category"],
@@ -166,77 +237,6 @@
                     }
                 }
             }
-        },
-        "/cars":{
-            "post":{
-                "tags": ["Cars"],
-                "summary": "Create a car",
-                "description": "Create a new car",
-                "security": [
-                { "bearer": []}
-                ],
-                "requestBody": {
-                    "content":{
-                        "application/json":{
-                            "schema":{
-                                "$ref": "#/components/schemas/Car"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Created"
-                    },
-                    "400": {
-                        "description": "Car already exists!"
-                    }
-                }
-            }
-        },
-        "/cars/images/{id}":{
-            "post":{
-                "tags": ["Cars"],
-                "summary": "Upload images",
-                "description": "Upload images",
-                "security": [
-                { "bearer": []}
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Car id",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        } 
-                    }
-                ],
-                "requestBody": {
-                    "content":{
-                        "multipart-form-data":{
-                            "schema":{
-                                "type":"object",
-                                "properties":{
-                                    "images":{
-                                        "type":"array",
-                                        "items": {
-                                            "type": "string",
-                                            "format": "binary"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Created"
-                    }
-                }
-            }
         }
     },
     "components": {
@@ -248,21 +248,6 @@
               }
         },
         "schemas": {
-            "Specification": { 
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "description":{
-                        "type": "string"
-                    }
-                },
-                "example": {
-                    "name": "Specification name sample",
-                    "description": "Specification description sample"
-                }
-            },
             "Car": { 
                 "type": "object",
                 "properties": {
@@ -296,6 +281,21 @@
                     "fine_amount": "100",
                     "brand": "Car sample",
                     "category_id": "Car sample"
+                }
+            },
+            "Specification": { 
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description":{
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "name": "Specification name sample",
+                    "description": "Specification description sample"
                 }
             }
         }
