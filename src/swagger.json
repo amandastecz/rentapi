@@ -1,21 +1,90 @@
 {
     "openapi": "3.0.0",
     "info":{
-        "title": "RentAPI Documentation",
-        "description": "This is an API Rent",
+        "title": "API Documentation",
+        "description": "Welcome to the Rental Services API",
         "version": "1.0.0",
         "contact": {
+            "name": "Amanda Stecz",
             "url": "https://www.linkedin.com/in/amanda-c-stecz-antunes-2b298b123/"
         }
     },
     "paths": {
+        "/session":{
+            "post":{
+                "tags": ["Authentication"],
+                "summary": "Login with credentials",
+                "description": "Login with credentials",
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{ 
+                                "type": "object",
+                                "properties": {
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "email":{
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "password": "1232456",
+                                    "email": "admin@rentapi.com.br"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description":  "Email or password incorrect!"
+                    }
+                }
+            }
+        },
+        "/refresh-token":{
+            "post":{
+                "tags": ["Authentication"],
+                "summary": "Refresh Token",
+                "description": "Refresh Token",
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{ 
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHJlbnRhcGkuY29tLmJyIiwiaWF0IjoxNjkwNjU1MTg1LCJleHAiOjE2OTMyNDcxODUsInN1YiI6ImIwYTE5ZTJiLWQ0ZDAtNGRjZi1hNzNhLTE5NTcxMDg0OTM2ZiJ9.OrL0DUy4ckDRKkVgd_RecCi48rCA5jYtlm9pizjzl48"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Refresh Token does not exists!"
+                    }
+                }
+            }
+        },
         "/cars":{
             "post":{
                 "tags": ["Cars"],
                 "summary": "Create a car",
                 "description": "Create a new car",
                 "security": [
-                { "bearer": []}
+                { "bearerAuth": []}
                 ],
                 "requestBody": {
                     "content":{
@@ -42,7 +111,7 @@
                 "summary": "Upload images",
                 "description": "Upload images",
                 "security": [
-                { "bearer": []}
+                { "bearerAuth": []}
                 ],
                 "parameters": [
                     {
@@ -87,7 +156,7 @@
                 "description": "Create a new category",
                 "security": [
                     {
-                        "bearer": []
+                        "bearerAuth": []
                     }
                 ],
                 "requestBody": {
@@ -175,7 +244,7 @@
                     }
                 },
                 "security": [
-                    { "bearer": []}
+                    { "bearerAuth": []}
                 ]
             }
         },
@@ -185,7 +254,7 @@
                 "summary": "Create a specification",
                 "description": "Create a new specification",
                 "security": [
-                    { "bearer": []}
+                    { "bearerAuth": []}
                 ],
                 "requestBody": {
                     "content":{
@@ -206,34 +275,77 @@
                 }
             }
         },
-        "/sessions": {
-            "post": {
-                "tags": ["Session"],
-                "summary": "Auth user",
-                "description": "Auth user",
+        "/password/forgot":{
+            "post":{
+                "tags": ["Password"],
+                "summary": "Forgot password",
+                "description": "Forgot password",
                 "requestBody": {
-                    "content": {
+                    "content":{
                         "application/json":{
-                            "schema":{
-                                "type":"object",
+                            "schema":{ 
+                                "type": "object",
                                 "properties":{
                                     "email":{
-                                        "type":"string"
-                                    },
-                                    "password":{
-                                        "type":"string"
+                                        "type": "string"
                                     }
+                                },
+                                "example": {
+                                    "email": "rent.api.br@gmail.com"
                                 }
                             }
                         }
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "Success"
+                    "201": {
+                        "description": "Created"
                     },
                     "400": {
-                        "description": "Email or password incorrect!"
+                        "description":  "User does not exists!"
+                    }
+                }
+            }
+        },
+        "/password/reset":{
+            "post":{
+                "tags": ["Password"],
+                "summary": "Reset password with token",
+                "description": "Reset password with token",
+                "parameters": [
+                    {
+                      "in": "query",
+                      "name": "token",
+                      "schema": {
+                        "type": "string"
+                      },
+                      "required": true,
+                      "description": "Refresh token"
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{ 
+                                "type": "object",
+                                "properties":{
+                                    "password":{
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "password": "1111"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Token invalid!"
                     }
                 }
             }
@@ -241,7 +353,7 @@
     },
     "components": {
         "securitySchemes": {
-            "bearer": {
+            "bearerAuth": {
                 "type": "http",
                 "scheme": "bearer",
                 "bearerFormat": "JWT"
@@ -296,6 +408,33 @@
                 "example": {
                     "name": "Specification name sample",
                     "description": "Specification description sample"
+                }
+            },
+            "User": { 
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "username":{
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "driver_license": {
+                        "type": "number"
+                    }
+                },
+                "example": {
+                    "name": "Amanda Stecz",
+                    "username": "stecz",
+                    "email": "rent.api.br@gmail.com",
+                    "password": "123456",
+                    "driver_license": "738g18f"
                 }
             }
         }
