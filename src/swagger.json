@@ -10,7 +10,7 @@
         }
     },
     "paths": {
-        "/session":{
+        "/sessions":{
             "post":{
                 "tags": ["Authentication"],
                 "summary": "Login with credentials",
@@ -29,7 +29,7 @@
                                     }
                                 },
                                 "example": {
-                                    "password": "1232456",
+                                    "password": "123456",
                                     "email": "admin@rentapi.com.br"
                                 }
                             }
@@ -184,7 +184,7 @@
                     "201": {
                         "description": "Created"
                     },
-                    "500": {
+                    "400": {
                         "description": "Category already exists!"
                     }
                 }
@@ -248,7 +248,7 @@
                 ]
             }
         },
-        "/specification":{
+        "/specifications":{
             "post": {
                 "tags": ["Specification"],
                 "summary": "Create a specification",
@@ -269,7 +269,7 @@
                     "201": {
                         "description": "Created"
                     },
-                    "500": {
+                    "400": {
                         "description": "Specification already exists!"
                     }
                 }
