@@ -349,6 +349,115 @@
                     }
                 }
             }
+        } ,
+        "/users/":{
+            "post":{
+                "tags": ["User"],
+                "summary": "Create a user",
+                "description": "Create a user",
+                "security": [
+                    { "bearerAuth": []}
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{ 
+                                "type": "object",
+                                "properties":{
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password":{
+                                        "type": "string"
+                                    },
+                                    "driver_license": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Amanda Stecz",
+                                    "username": "stecztech",
+                                    "email": "rent.api.br@gmail.com",
+                                    "password": "123456",
+                                    "driver_license": "738g18f"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Email already exists!"
+                    }
+                }
+            }
+        } ,
+        "/users/profile":{
+            "get":{
+                "tags": ["User"],
+                "summary": "Get the user profile",
+                "description": "Get the user profile",
+                "security": [
+                    { "bearerAuth": []}
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Sucess",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token invalid!"
+                    }
+                }
+            }
+        },
+        "/users/avatar":{
+            "patch":{
+                "tags": ["User"],
+                "summary": "Create a avatar to user",
+                "description": "Create a avatar to user with a image file",
+                "requestBody": {
+                    "content": {
+                        "multipart-form-data":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Token invalid!"
+                    }
+                },
+                "security": [
+                    { "bearerAuth": []}
+                ]
+            }
         }
     },
     "components": {
@@ -427,6 +536,9 @@
                     },
                     "driver_license": {
                         "type": "number"
+                    },
+                    "avatar_url": {
+                        "type": "string"
                     }
                 },
                 "example": {
@@ -434,7 +546,8 @@
                     "username": "stecz",
                     "email": "rent.api.br@gmail.com",
                     "password": "123456",
-                    "driver_license": "738g18f"
+                    "driver_license": "738g18f",
+                    "avatar_url": "https://rent-api-br.s3.sa-east-1.amazonaws.com/avatar/null"
                 }
             }
         }
