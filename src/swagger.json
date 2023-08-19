@@ -105,69 +105,6 @@
                 }
             }
         },
-        "/cars/available": {
-            "get": {
-              "summary": "Get available cars",
-              "description": "Retrieve a list of available cars based on optional query parameters.",
-              "parameters": [
-                {
-                  "in": "query",
-                  "name": "brand",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "description": "Filter cars by brand."
-                },
-                {
-                  "in": "query",
-                  "name": "name",
-                  "schema": {
-                    "type": "string"
-                  },
-                  "description": "Filter cars by name."
-                },
-                {
-                  "in": "query",
-                  "name": "category_id",
-                  "schema": {
-                    "type": "integer",
-                    "format": "int64"
-                  },
-                  "description": "Filter cars by category ID."
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "Successful response containing a list of available cars.",
-                  "content": {
-                    "application/json": {
-                      "example": {
-                        "cars": [
-                          {
-                            "id": 1,
-                            "brand": "Toyota",
-                            "name": "Corolla",
-                            "category_id": 101
-                          },
-                          {
-                            "id": 2,
-                            "brand": "Honda",
-                            "name": "Civic",
-                            "category_id": 102
-                          }
-                        ]
-                      }
-                    }
-                  }
-                },
-                "400": {
-                  "description": "Invalid request."
-                },
-                "500": {
-                  "description": "Internal server error."
-                }
-              }
-        },
         "/cars/images/{id}":{
             "post":{
                 "tags": ["Cars"],
