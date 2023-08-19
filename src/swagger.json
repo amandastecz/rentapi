@@ -104,6 +104,74 @@
                     }
                 }
             }
+        },        
+        "/cars/available":{
+            "get":{
+                "tags": ["Cars"],
+                "summary": "List all cars available",
+                "description": "List all cars available",
+                "security": [
+                { "bearerAuth": []}
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json":{
+                                "schema":{ 
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "available":{
+                                            "type": "boolean"
+                                        },
+                                        "name":{
+                                            "type": "string"
+                                        },
+                                        "description":{
+                                            "type": "string"
+                                        },
+                                        "daily_rate":{
+                                            "type": "string"
+                                        },
+                                        "license_plate":{
+                                            "type": "string"
+                                        },
+                                        "fine_amount":{
+                                            "type": "string"
+                                        },
+                                        "brand":{
+                                            "type": "string"
+                                        },
+                                        "category_id":{
+                                            "type": "string"
+                                        },
+                                        "created_at":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": [
+                                        {
+                                          "id": "b37fca80-e170-42da-a850-40bf5755ca75",
+                                          "available": true,
+                                          "name": "Audi 3",
+                                          "description": "teste",
+                                          "daily_rate": "1601",
+                                          "license_plate": "123123",
+                                          "fine_amount": "60",
+                                          "brand": "Brand",
+                                          "category_id": "f6e22c59-f7bd-4f58-9b04-0c964f2c011b",
+                                          "created_at": "2023-08-19T04:28:55.195Z"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         },
         "/cars/images/{id}":{
             "post":{
@@ -145,6 +213,49 @@
                 "responses": {
                     "201": {
                         "description": "Created"
+                    }
+                }
+            }
+        },
+        "/cars/specifications/{id}":{
+            "post": {
+                "tags": ["Cars"],
+                "summary": "Create a specification to a car",
+                "description": "Create a specification to a car",
+                "security": [
+                    { "bearerAuth": []}
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{ 
+                                "type": "object",
+                                "properties": {
+                                    "specifications_id": {
+                                        "type": "array"
+                                    }
+                                },
+                                "example": {
+                                    "specifications_id": [
+                                        "6e024129-c94e-4bf1-9850-3664e54f984c"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Car doesn't exists!"
+                    },
+                    "400": {
+                        "description": "Specification doesn't exists!"
+                    },
+                    "401": {
+                        "description": "Token invalid!"
                     }
                 }
             }
