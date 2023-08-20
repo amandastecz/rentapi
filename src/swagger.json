@@ -569,6 +569,45 @@
                     { "bearerAuth": []}
                 ]
             }
+        },
+        "/rentals/":{
+            "patch":{
+                "tags": ["Rental"],
+                "summary": "Create a avatar to user",
+                "description": "Create a avatar to user with a image file",
+                "requestBody": {
+                    "content": {
+                        "multipart-form-data":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "expected_return_date": {
+                                        "type": "string"
+                                    },
+                                    "car_id": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "expected_return_date": "2024-08-10T02:19:22.990Z",
+                                    "car_id": "b37fca80-e170-42da-a850-40bf5755ca75"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Token invalid!"
+                    }
+                },
+                "security": [
+                    { "bearerAuth": []}
+                ]
+            }
         }
     },
     "components": {
