@@ -571,7 +571,7 @@
             }
         },
         "/rentals/":{
-            "patch":{
+            "post":{
                 "tags": ["Rental"],
                 "summary": "Create a rental when a car is available",
                 "description": "Create a rental when a car is available",
@@ -597,8 +597,17 @@
                     }
                 },
                 "responses": {
-                    "204": {
-                        "description": "Success"
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Car is unavailable"
+                    },
+                    "400": {
+                        "description": "There is a rental in progress for user!"
+                    },
+                    "400": {
+                        "description": "Invalid return time!"
                     },
                     "401": {
                         "description": "Token invalid!"
