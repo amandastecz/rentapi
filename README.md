@@ -1,9 +1,9 @@
 ## Wiki
 [For more information, check the project's wiki.](https://github.com/amandastecz/rentapi/wiki/)
 
-## API Documentation (under construction)
+## API Documentation
 
-[To see the swagger of the project click here.](http://18.231.189.148/api-docs/)
+[Check the API documentation on Swagger UI](http://18.231.189.148/api-docs/)
 
 ## NodeJs - Rent API
 
