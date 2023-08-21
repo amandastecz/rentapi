@@ -742,6 +742,115 @@
                     { "bearerAuth": []}
                 ]
             }
+        },        
+        "/rentals/user":{
+            "get":{
+                "tags": ["Rental"],
+                "summary": "List all rentals per user",
+                "description": "List all rentals per user",
+                "security": [
+                { "bearerAuth": []}
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json":{
+                                "schema":{ 
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "car_id":{
+                                            "type": "boolean"
+                                        },
+                                        "user_id":{
+                                            "type": "string"
+                                        },
+                                        "start_date":{
+                                            "type": "string"
+                                        },
+                                        "end_date":{
+                                            "type": "string"
+                                        },
+                                        "expected_return_date":{
+                                            "type": "string"
+                                        },
+                                        "total":{
+                                            "type": "string"
+                                        },
+                                        "created_at":{
+                                            "type": "string"
+                                        },
+                                        "updated_at":{
+                                            "type": "string"
+                                        },
+                                        "car":{
+                                            "type": "string",
+                                            "id":{
+                                                "type": "string"
+                                            },
+                                            "available":{
+                                                "type": "boolean"
+                                            },
+                                            "name":{
+                                                "type": "string"
+                                            },
+                                            "description":{
+                                                "type": "string"
+                                            },
+                                            "daily_rate":{
+                                                "type": "string"
+                                            },
+                                            "license_plate":{
+                                                "type": "string"
+                                            },
+                                            "fine_amount":{
+                                                "type": "string"
+                                            },
+                                            "brand":{
+                                                "type": "string"
+                                            },
+                                            "category_id":{
+                                                "type": "string"
+                                            },
+                                            "created_at":{
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "example": [
+                                        {
+                                            "id": "7432e4e3-325a-47bb-b3c9-5ec2d13eb659",
+                                            "car_id": "ad8ffd53-721d-4ac7-ba9a-043758950e8a",
+                                            "user_id": "b0a19e2b-d4d0-4dcf-a73a-19571084936f",
+                                            "start_date": "2023-07-22T02:45:06.770Z",
+                                            "end_date": "2023-07-22T02:45:10.298Z",
+                                            "expected_return_date": "2023-08-10T02:19:22.990Z",
+                                            "total": "1240",
+                                            "created_at": "2023-07-22T02:45:06.770Z",
+                                            "updated_at": "2023-07-22T02:45:10.300Z",
+                                            "car": {
+                                              "id": "ad8ffd53-721d-4ac7-ba9a-043758950e8a",
+                                              "available": true,
+                                              "name": "Audi 2",
+                                              "description": "teste",
+                                              "daily_rate": "160",
+                                              "license_plate": "214324",
+                                              "fine_amount": "60",
+                                              "brand": "Brand",
+                                              "category_id": "99445762-ef2b-4798-9788-dbe5a623c0c1",
+                                              "created_at": "2023-07-22T02:44:04.872Z"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
