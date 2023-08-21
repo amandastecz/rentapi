@@ -1,155 +1,36 @@
 {
     "openapi": "3.0.0",
     "info":{
-        "title": "RentAPI Documentation",
-        "description": "This is an API Rent",
+        "title": "API Documentation",
+        "description": "Welcome to the Rental Services API",
         "version": "1.0.0",
         "contact": {
+            "name": "Amanda Stecz",
             "url": "https://www.linkedin.com/in/amanda-c-stecz-antunes-2b298b123/"
         }
     },
     "paths": {
-        "/categories":{
+        "/sessions":{
             "post":{
-                "tags": ["Category"],
-                "summary": "Create a category",
-                "description": "Create a new category",
-                "security": [
-                { "bearerAuth": []}
-                ],
+                "tags": ["Authentication"],
+                "summary": "Login with credentials",
+                "description": "Login with credentials",
                 "requestBody": {
                     "content":{
                         "application/json":{
                             "schema":{ 
                                 "type": "object",
                                 "properties": {
-                                    "name": {
+                                    "password": {
                                         "type": "string"
                                     },
-                                    "description":{
+                                    "email":{
                                         "type": "string"
                                     }
                                 },
                                 "example": {
-                                    "name": "Category name sample",
-                                    "description": "Category description sample"
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Created"
-                    },
-                    "500": {
-                        "description": "Category already exists!"
-                    }
-                }
-            },
-            "get":{
-                "tags": ["Category"],
-                "summary": "List all categories",
-                "description": "List all categories",
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json":{
-                                "schema":{ 
-                                    "type": "object",
-                                    "properties": {
-                                        "name": {
-                                            "type": "string"
-                                        },
-                                        "description":{
-                                            "type": "string"
-                                        }
-                                    },
-                                    "example": {
-                                        "name": "Specification name sample",
-                                        "description": "Specification description sample"
-                                    }
-                                }
-                            }                      }
-                    }
-                }
-            }
-        },
-        "/categories/import":{
-            "post":{
-                "tags": ["Category"],
-                "summary": "Create a category by importing",
-                "description": "Create a category by importing a csv file",
-                "security": [
-                    { "bearerAuth": []}
-                ],
-                "requestBody": {
-                    "content": {
-                        "multipart-form-data":{
-                            "schema":{
-                                "type": "object",
-                                "properties":{
-                                    "file": {
-                                        "type": "string",
-                                        "format": "binary"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    }
-                }
-            }
-        },
-        "/specification":{
-            "post": {
-                "tags": ["Specification"],
-                "summary": "Create a specification",
-                "description": "Create a new specification",
-                "security": [
-                    { "bearerAuth": []}
-                ],
-                "requestBody": {
-                    "content":{
-                        "application/json":{
-                            "schema":{
-                                "$ref": "#/definitions/Specification"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Created"
-                    },
-                    "500": {
-                        "description": "Specification already exists!"
-                    }
-                }
-            }
-        },
-        "/sessions": {
-            "post": {
-                "tags": ["Session"],
-                "summary": "Auth user",
-                "description": "Auth user",
-                "requestBody": {
-                    "content": {
-                        "application/json":{
-                            "schema":{
-                                "type":"object",
-                                "properties":{
-                                    "email":{
-                                        "type":"string"
-                                    },
-                                    "password":{
-                                        "type":"string"
-                                    }
+                                    "password": "123456",
+                                    "email": "admin@rentapi.com.br"
                                 }
                             }
                         }
@@ -160,7 +41,39 @@
                         "description": "Success"
                     },
                     "400": {
-                        "description": "Email or password incorrect!"
+                        "description":  "Email or password incorrect!"
+                    }
+                }
+            }
+        },
+        "/refresh-token":{
+            "post":{
+                "tags": ["Authentication"],
+                "summary": "Refresh Token",
+                "description": "Refresh Token",
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{ 
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHJlbnRhcGkuY29tLmJyIiwiaWF0IjoxNjkwNjU1MTg1LCJleHAiOjE2OTMyNDcxODUsInN1YiI6ImIwYTE5ZTJiLWQ0ZDAtNGRjZi1hNzNhLTE5NTcxMDg0OTM2ZiJ9.OrL0DUy4ckDRKkVgd_RecCi48rCA5jYtlm9pizjzl48"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Refresh Token does not exists!"
                     }
                 }
             }
@@ -177,7 +90,7 @@
                     "content":{
                         "application/json":{
                             "schema":{
-                                "$ref": "#/definitions/Car"
+                                "$ref": "#/components/schemas/Car"
                             }
                         }
                     }
@@ -188,6 +101,74 @@
                     },
                     "400": {
                         "description": "Car already exists!"
+                    }
+                }
+            }
+        },        
+        "/cars/available":{
+            "get":{
+                "tags": ["Cars"],
+                "summary": "List all cars available",
+                "description": "List all cars available",
+                "security": [
+                { "bearerAuth": []}
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json":{
+                                "schema":{ 
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "available":{
+                                            "type": "boolean"
+                                        },
+                                        "name":{
+                                            "type": "string"
+                                        },
+                                        "description":{
+                                            "type": "string"
+                                        },
+                                        "daily_rate":{
+                                            "type": "string"
+                                        },
+                                        "license_plate":{
+                                            "type": "string"
+                                        },
+                                        "fine_amount":{
+                                            "type": "string"
+                                        },
+                                        "brand":{
+                                            "type": "string"
+                                        },
+                                        "category_id":{
+                                            "type": "string"
+                                        },
+                                        "created_at":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": [
+                                        {
+                                          "id": "b37fca80-e170-42da-a850-40bf5755ca75",
+                                          "available": true,
+                                          "name": "Audi 3",
+                                          "description": "teste",
+                                          "daily_rate": "1601",
+                                          "license_plate": "123123",
+                                          "fine_amount": "60",
+                                          "brand": "Brand",
+                                          "category_id": "f6e22c59-f7bd-4f58-9b04-0c964f2c011b",
+                                          "created_at": "2023-08-19T04:28:55.195Z"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -236,22 +217,611 @@
                 }
             }
         },
-        "definitions": {
-            "Specification": { 
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "description":{
-                        "type": "string"
+        "/cars/specifications/{id}":{
+            "post": {
+                "tags": ["Cars"],
+                "summary": "Create a specification to a car",
+                "description": "Create a specification to a car",
+                "security": [
+                    { "bearerAuth": []}
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Car id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        } 
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{ 
+                                "type": "object",
+                                "properties": {
+                                    "specifications_id": {
+                                        "type": "array"
+                                    }
+                                },
+                                "example": {
+                                    "specifications_id": [
+                                        "6e024129-c94e-4bf1-9850-3664e54f984c"
+                                    ]
+                                }
+                            }
+                        }
                     }
                 },
-                "example": {
-                    "name": "Specification name sample",
-                    "description": "Specification description sample"
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Car doesn't exists!"
+                    },
+                    "400": {
+                        "description": "Specification doesn't exists!"
+                    },
+                    "401": {
+                        "description": "Token invalid!"
+                    }
+                }
+            }
+        },
+        "/categories":{
+            "post":{
+                "tags": ["Category"],
+                "summary": "Create a category",
+                "description": "Create a new category",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{ 
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description":{
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Category name sample",
+                                    "description": "Category description sample"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Category already exists!"
+                    }
                 }
             },
+            "get":{
+                "tags": ["Category"],
+                "summary": "List all categories",
+                "description": "List all categories",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json":{
+                                "schema":{ 
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "description":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "name": "Specification name sample",
+                                        "description": "Specification description sample"
+                                    }
+                                }
+                            }                      }
+                    }
+                }
+            }
+        },
+        "/categories/import":{
+            "post":{
+                "tags": ["Category"],
+                "summary": "Create a category by importing",
+                "description": "Create a category by importing a csv file",
+                "requestBody": {
+                    "content": {
+                        "multipart-form-data":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "security": [
+                    { "bearerAuth": []}
+                ]
+            }
+        },
+        "/password/forgot":{
+            "post":{
+                "tags": ["Password"],
+                "summary": "Forgot password",
+                "description": "Forgot password",
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{ 
+                                "type": "object",
+                                "properties":{
+                                    "email":{
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "email": "rent.api.br@gmail.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description":  "User does not exists!"
+                    }
+                }
+            }
+        },
+        "/password/reset":{
+            "post":{
+                "tags": ["Password"],
+                "summary": "Reset password with token",
+                "description": "Reset password with token",
+                "parameters": [
+                    {
+                      "in": "query",
+                      "name": "token",
+                      "schema": {
+                        "type": "string"
+                      },
+                      "required": true,
+                      "description": "Refresh token"
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{ 
+                                "type": "object",
+                                "properties":{
+                                    "password":{
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "password": "1111"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Token invalid!"
+                    }
+                }
+            }
+        },
+        "/specifications":{
+            "post": {
+                "tags": ["Specification"],
+                "summary": "Create a specification",
+                "description": "Create a new specification",
+                "security": [
+                    { "bearerAuth": []}
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Specification"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Specification already exists!"
+                    }
+                }
+            }
+        },
+        "/users/":{
+            "post":{
+                "tags": ["User"],
+                "summary": "Create a user",
+                "description": "Create a user",
+                "security": [
+                    { "bearerAuth": []}
+                ],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{ 
+                                "type": "object",
+                                "properties":{
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password":{
+                                        "type": "string"
+                                    },
+                                    "driver_license": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Amanda Stecz",
+                                    "username": "stecztech",
+                                    "email": "rent.api.br@gmail.com",
+                                    "password": "123456",
+                                    "driver_license": "738g18f"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Email already exists!"
+                    }
+                }
+            }
+        } ,
+        "/users/profile":{
+            "get":{
+                "tags": ["User"],
+                "summary": "Get the user profile",
+                "description": "Get the user profile",
+                "security": [
+                    { "bearerAuth": []}
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Sucess",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token invalid!"
+                    }
+                }
+            }
+        },
+        "/users/avatar":{
+            "patch":{
+                "tags": ["User"],
+                "summary": "Create a avatar to user",
+                "description": "Create a avatar to user with a image file",
+                "requestBody": {
+                    "content": {
+                        "multipart-form-data":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Token invalid!"
+                    }
+                },
+                "security": [
+                    { "bearerAuth": []}
+                ]
+            }
+        },
+        "/rentals/":{
+            "post":{
+                "tags": ["Rental"],
+                "summary": "Create a rental when a car is available",
+                "description": "Create a rental when a car is available",
+                "requestBody": {
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "expected_return_date": {
+                                        "type": "string"
+                                    },
+                                    "car_id": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "expected_return_date": "2024-08-10T02:19:22.990Z",
+                                    "car_id": "b37fca80-e170-42da-a850-40bf5755ca75"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json":{
+                                "schema":{ 
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "car_id":{
+                                            "type": "string"
+                                        },
+                                        "user_id":{
+                                            "type": "string"
+                                        },
+                                        "expected_return_date":{
+                                            "type": "string"
+                                        },
+                                        "created_at":{
+                                            "type": "string"
+                                        },
+                                        "updated_at":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "id": "f9fe2c1c-aa32-4ce9-8f1f-724ce935d9fa",
+                                        "car_id": "b37fca80-e170-42da-a850-40bf5755ca75",
+                                        "user_id": "367f01c9-ac7d-4794-88de-9a1005a2ba97",
+                                        "expected_return_date": "2024-08-10T02:19:22.990Z",
+                                        "created_at": "2023-08-22T01:16:04.382Z",
+                                        "updated_at": "2023-08-22T01:16:04.382Z"
+                                      }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Car is unavailable"
+                    },
+                    "400": {
+                        "description": "There is a rental in progress for user!"
+                    },
+                    "400": {
+                        "description": "Invalid return time!"
+                    },
+                    "401": {
+                        "description": "Token invalid!"
+                    }
+                },
+                "security": [
+                    { "bearerAuth": []}
+                ]
+            }
+        },
+        "/rentals/devolution/{id}":{
+            "post":{
+                "tags": ["Rental"],
+                "summary": "Devolution of a car",
+                "description": "Devolution of a car",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Rental id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        } 
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "$ref": "#/components/schemas/Rental"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Rental does not exists!"
+                    },
+                    "401": {
+                        "description": "Token invalid!"
+                    }
+                },
+                "security": [
+                    { "bearerAuth": []}
+                ]
+            }
+        },        
+        "/rentals/user":{
+            "get":{
+                "tags": ["Rental"],
+                "summary": "List all rentals per user",
+                "description": "List all rentals per user",
+                "security": [
+                { "bearerAuth": []}
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json":{
+                                "schema":{ 
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "car_id":{
+                                            "type": "boolean"
+                                        },
+                                        "user_id":{
+                                            "type": "string"
+                                        },
+                                        "start_date":{
+                                            "type": "string"
+                                        },
+                                        "end_date":{
+                                            "type": "string"
+                                        },
+                                        "expected_return_date":{
+                                            "type": "string"
+                                        },
+                                        "total":{
+                                            "type": "string"
+                                        },
+                                        "created_at":{
+                                            "type": "string"
+                                        },
+                                        "updated_at":{
+                                            "type": "string"
+                                        },
+                                        "car":{
+                                            "type": "string",
+                                            "id":{
+                                                "type": "string"
+                                            },
+                                            "available":{
+                                                "type": "boolean"
+                                            },
+                                            "name":{
+                                                "type": "string"
+                                            },
+                                            "description":{
+                                                "type": "string"
+                                            },
+                                            "daily_rate":{
+                                                "type": "string"
+                                            },
+                                            "license_plate":{
+                                                "type": "string"
+                                            },
+                                            "fine_amount":{
+                                                "type": "string"
+                                            },
+                                            "brand":{
+                                                "type": "string"
+                                            },
+                                            "category_id":{
+                                                "type": "string"
+                                            },
+                                            "created_at":{
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "example": [
+                                        {
+                                            "id": "7432e4e3-325a-47bb-b3c9-5ec2d13eb659",
+                                            "car_id": "ad8ffd53-721d-4ac7-ba9a-043758950e8a",
+                                            "user_id": "b0a19e2b-d4d0-4dcf-a73a-19571084936f",
+                                            "start_date": "2023-07-22T02:45:06.770Z",
+                                            "end_date": "2023-07-22T02:45:10.298Z",
+                                            "expected_return_date": "2023-08-10T02:19:22.990Z",
+                                            "total": "1240",
+                                            "created_at": "2023-07-22T02:45:06.770Z",
+                                            "updated_at": "2023-07-22T02:45:10.300Z",
+                                            "car": {
+                                              "id": "ad8ffd53-721d-4ac7-ba9a-043758950e8a",
+                                              "available": true,
+                                              "name": "Audi 2",
+                                              "description": "teste",
+                                              "daily_rate": "160",
+                                              "license_plate": "214324",
+                                              "fine_amount": "60",
+                                              "brand": "Brand",
+                                              "category_id": "99445762-ef2b-4798-9788-dbe5a623c0c1",
+                                              "created_at": "2023-07-22T02:44:04.872Z"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+              }
+        },
+        "schemas": {
             "Car": { 
                 "type": "object",
                 "properties": {
@@ -286,14 +856,94 @@
                     "brand": "Car sample",
                     "category_id": "Car sample"
                 }
-            }
-        },
-        "components": {
-            "securitySchemes": {
-                "bearerAuth": {
-                    "type": "http",
-                    "scheme": "bearer",
-                    "bearerFormat": "JWT"
+            },
+            "Rental": { 
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "car_id":{
+                        "type": "string"
+                    },
+                    "user_id":{
+                        "type": "string"
+                    },
+                    "start_date":{
+                        "type": "string"
+                    },
+                    "end_date":{
+                        "type": "string"
+                    },
+                    "expected_return_date":{
+                        "type": "string"
+                    },
+                    "total":{
+                        "type": "string"
+                    },
+                    "created_at":{
+                        "type": "string"
+                    },
+                    "updated_at":{
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "id": "7432e4e3-325a-47bb-b3c9-5ec2d13eb659",
+                    "car_id": "ad8ffd53-721d-4ac7-ba9a-043758950e8a",
+                    "user_id": "b0a19e2b-d4d0-4dcf-a73a-19571084936f",
+                    "start_date": "2023-07-22T02:45:06.770Z",
+                    "end_date": "2023-07-22T02:45:10.298Z",
+                    "expected_return_date": "2023-08-10T02:19:22.990Z",
+                    "total": 1240,
+                    "created_at": "2023-07-22T02:45:06.770Z",
+                    "updated_at": "2023-07-22T02:45:06.770Z"
+                  }
+            },
+            "Specification": { 
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description":{
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "name": "Specification name sample",
+                    "description": "Specification description sample"
+                }
+            },
+            "User": { 
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "username":{
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "driver_license": {
+                        "type": "number"
+                    },
+                    "avatar_url": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "name": "Amanda Stecz",
+                    "username": "stecz",
+                    "email": "rent.api.br@gmail.com",
+                    "password": "123456",
+                    "driver_license": "738g18f",
+                    "avatar_url": "https://rent-api-br.s3.sa-east-1.amazonaws.com/avatar/null"
                 }
             }
         }
