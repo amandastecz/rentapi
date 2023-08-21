@@ -573,11 +573,11 @@
         "/rentals/":{
             "patch":{
                 "tags": ["Rental"],
-                "summary": "Create a avatar to user",
-                "description": "Create a avatar to user with a image file",
+                "summary": "Create a rental when a car is available",
+                "description": "Create a rental when a car is available",
                 "requestBody": {
                     "content": {
-                        "multipart-form-data":{
+                        "application/json":{
                             "schema":{
                                 "type": "object",
                                 "properties":{
