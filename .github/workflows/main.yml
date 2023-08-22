@@ -25,6 +25,9 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: Docker
+        run: docker-compose up -d
+
       - name: Test
         run: yarn test
       
