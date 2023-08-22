@@ -25,6 +25,9 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: Config
+        run: cp ormconfig.example.json ormconfig.json
+
       - name: Docker
         run: docker-compose up -d
 
