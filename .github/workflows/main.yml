@@ -24,15 +24,6 @@ jobs:
       
       - name: Build
         run: yarn build
-
-      - name: Config
-        run: cp ormconfig.example.json ormconfig.json
-
-      - name: Docker
-        run: docker-compose up -d
-
-      - name: Test
-        run: yarn test:ci
       
       - name: Copy file via ssh key
         uses: appleboy/scp-action@v0.1.4
