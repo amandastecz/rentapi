@@ -8,6 +8,7 @@
     "dev": "ts-node-dev --inspect=0.0.0.0 --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli",
     "test": "cross-env NODE_ENV=test jest --detectOpenHandles --runInBand",
+    "test:ci": "cross-env jest --detectOpenHandles --runInBand",
     "seed:admin": "ts-node-dev src/shared/infra/typeorm/seed/admin.ts"
   },
   "dependencies": {
