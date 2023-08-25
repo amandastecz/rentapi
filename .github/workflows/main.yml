@@ -21,9 +21,33 @@ jobs:
         
       - name: Install dependencies
         run: yarn
+
+      - name: Create db bank file
+        run: cp ormconfig.example.json ormconfig.json
       
       - name: Build
         run: yarn build
+
+      - name: Docker compose up
+        run: docker-compose up -d
+
+      - name: Wait for Services to Start
+        run: sleep 60
+
+      - name: Run migrations
+        run: yarn typeorm migration:run
+        
+      - name: Run seed
+        run: yarn seed:admin
+
+      - name: Run application
+        run: yarn dev &
+
+      - name: Wait for Services to Start
+        run: sleep 30
+
+      - name: Run tests
+        run: yarn test
       
       - name: Copy file via ssh key
         uses: appleboy/scp-action@v0.1.4
