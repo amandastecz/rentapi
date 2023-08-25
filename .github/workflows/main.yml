@@ -29,7 +29,7 @@ jobs:
         run: docker-compose up -d
 
       - name: Wait for Services to Start
-        run: sleep 20
+        run: sleep 60
 
       - name: Run migrations
         run: yarn typeorm migration:run
@@ -41,7 +41,7 @@ jobs:
         run: yarn dev &
 
       - name: Wait for Services to Start
-        run: sleep 10
+        run: sleep 30
 
       - name: Run tests
         run: yarn test
