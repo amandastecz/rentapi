@@ -56,3 +56,33 @@ yarn dev
 ```
 
 With these steps completed, you'll have the RentAPI project running on your localhost, ready for exploration, testing, and development. Feel free to dive into the codebase and API documentation. 
+
+
+# Running the tests locally
+ Run the following command to test:
+
+```bash
+yarn test
+```
+
+### Tests scenarios
+- [x] [Accounts] should be able to authenticate an user
+- [x] [Accounts] should not be able to authenticate a nonexistent user
+- [x] [Accounts] should not be able to authenticate a user with wrong password
+- [x] [Accounts] should be able to send forgot password mail to user
+- [x] [Cars] should be able to create a new car
+- [x] [Cars] should not to be able to create a car with an existent license plate
+- [x] [Cars] should be able to create a new car with available true by default
+- [x] [Cars] should not be able to add a new specification to a non-existent car
+- [x] [Cars] should be able to add a new specification to an existent car
+- [x] [Cars] should be able to create a new category
+- [x] [Cars] should not be able to create a new category if already exists
+- [x] [Cars] should be able to list all available cars
+- [x] [Cars] should be able to list all available cars by name
+- [x] [Cars] should be able to list all available cars by brand
+- [x] [Cars] should be able to list all available cars by category_id
+- [x] [Cars] should be able to list all categories
+- [x] [Rentals] should be able to create a new rental 
+- [x] [Rentals] should not be able to create a new rental if there is another open to the same user 
+- [x] [Rentals] should not be able to create a new rental if there is another open to the same car
+- [x] [Rentals] should not be able to create a new rental with invalid return time
