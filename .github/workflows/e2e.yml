@@ -9,9 +9,11 @@ jobs:
   cross-repo-pipeline:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+
       - name: cross-repo-pipeline-trigger
-        uses: amandastecz/pipeline-trigger@v1.1            
+        uses: amandastecz/pipeline-trigger@v1.1
         with:
           pat-token: ${{ secrets.PAT_TOKEN }}
-          owner: 'amandastecz'
-          repo: 'playwright-actions'
+          owner: "amandastecz"
+          repo: "playwright-actions"
