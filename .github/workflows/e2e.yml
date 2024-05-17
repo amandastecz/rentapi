@@ -9,10 +9,6 @@ jobs:
   cross-repo-pipeline:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          owner: amandastecz/rentapi
-
       - name: cross-repo-pipeline-trigger
         uses: amandastecz/pipeline-trigger@v1.1
         with:
