@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          owner: amanda/playwright-actions
+          owner: amandastecz/playwright-actions
 
       - name: cross-repo-pipeline-trigger
         uses: amandastecz/pipeline-trigger@v1.1
