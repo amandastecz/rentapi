@@ -13,5 +13,5 @@ jobs:
         uses: amandastecz/pipeline-trigger@v1.1            
         with:
           pat-token: ${{ secrets.PAT_TOKEN }}
-          owner: 'owner'
-          repo: 'target-repo'
+          owner: 'amandastecz'
+          repo: 'playwright-actions'
