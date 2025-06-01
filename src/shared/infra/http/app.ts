@@ -56,4 +56,8 @@ app.use((err: Error, request: Request, response: Response, next: NextFunction) =
     })
 });
 
+app.get('/swagger.json', (req, res) => {
+  res.send(swaggerFile);
+});
+
 export { app }

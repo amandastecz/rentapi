@@ -2,12 +2,8 @@
     "openapi": "3.0.0",
     "info":{
         "title": "API Documentation",
-        "description": "Welcome to the Rental Services API",
-        "version": "1.0.0",
-        "contact": {
-            "name": "Amanda Stecz",
-            "url": "https://www.linkedin.com/in/amanda-c-stecz-antunes-2b298b123/"
-        }
+        "description": "Welcome to the Rental Services API by Amanda Stecz \n\n [/swagger.json](../swagger.json)",
+        "version": "1.0.0"
     },
     "paths": {
         "/sessions":{
