@@ -1,0 +1,26 @@
+meta {
+  name: List all categories
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/categories
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+}
+
+script:pre-request {
+  // const loginRequest = "Authentication/Login with credentials";
+  // await bru.runRequest(loginRequest);
+}
+
+script:post-response {
+  const data = res.body;
+  const randomCategory = data[Math.floor(Math.random() * data.length)];
+  bru.setVar("categoryId", randomCategory.id);
+}
