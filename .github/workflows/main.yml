@@ -41,10 +41,19 @@ jobs:
         run: yarn seed:admin
 
       - name: Run application
-        run: yarn dev &
+        run: nohup yarn dev > app.log 2>&1 &
 
       - name: Wait for Services to Start
         run: sleep 30
+
+      - name: Show application logs
+        run: tail -n 50 app.log
+
+      - name: Check if API is up
+        run: |
+          curl -X POST http://localhost:3333/sessions \
+          -H "Content-Type: application/json" \
+          -d '{"email":"admin@rentapi.com.br","password":"123456"}'
 
       - name: Run unit testsa
         run: yarn test
@@ -55,12 +64,6 @@ jobs:
       - name: Install Bruno test dependencies
         working-directory: src/api-collection
         run: npm install
-
-      - name: Check if API is up
-        run: |
-          curl -X POST http://localhost:3333/sessions \
-          -H "Content-Type: application/json" \
-          -d '{"email":"admin@rentapi.com.br","password":"123456"}'
 
       - name: Create Bruno .env file
         working-directory: src/api-collection
