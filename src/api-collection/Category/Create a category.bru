@@ -29,11 +29,6 @@ assert {
 script:pre-request {
   const { faker } = require('@faker-js/faker');
   
-  const requestPathName = "Authentication/Refresh Token";
-  await bru.runRequest(
-     requestPathName
-  );
-  
   const data = {
     name: faker.vehicle.type() + faker.lorem.word(),
     description: faker.lorem.sentence()
@@ -42,21 +37,4 @@ script:pre-request {
   req.setBody(data);
   
   
-}
-
-script:post-response {
-  const response = res.body;
-  const requestPathName = "Category/List all categories";
-  
-  if(res.status === 201){
-    const responseGetAllCategories = await bru.runRequest(
-     requestPathName
-  );
-  const allCategories = responseGetAllCategories.data;
-    const lastCategory = allCategories[allCategories.length - 1];
-    bru.setVar("lastCategoryId", lastCategory.id);
-    console.log("Última categoria ID:", lastCategory.id);
-  }else{
-    console.error("A categoria não foi criada, motivo: \n" + res.body.message);
-  }
 }
