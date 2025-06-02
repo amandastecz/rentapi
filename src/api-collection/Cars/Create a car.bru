@@ -33,17 +33,9 @@ assert {
 script:pre-request {
   const { faker } = require('@faker-js/faker');
   
-  // (async function setup() {
-  // //  await bru.runRequest("Authentication/Login with credentials");
-  //     console.log("Executing START....")
-  //   await bru.runRequest("Category/Create a category");
-  //   await bru.runRequest("Category/List all categories");
-  //   console.log("Executing END....")
-  // })();
-  
   const nameCarValue = faker.vehicle.model();
   await bru.setVar("nameCar",nameCarValue);
-  const categoryId = await bru.getVar("categoryId");
+  const categoryId = bru.getVar("categoryId");
   
   const dailyRate = parseFloat(faker.finance.amount());
   const fineAmount = parseFloat(faker.finance.amount());
@@ -68,53 +60,45 @@ script:post-response {
 }
 
 tests {
-  const Ajv = require('ajv');
-  const ajv = new Ajv();
+  const tv4 = require("tv4");
   
-  const schema = {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "type": "object",
-    "properties": {
-      "id": { "type": "string" },
-      "available": { "type": "boolean" },
-      "name": { "type": "string" },
-      "description": { "type": "string" },
-      "daily_rate": { "type": "number" },
-      "license_plate": { "type": "string" },
-      "fine_amount": { "type": "number" },
-      "brand": { "type": "string" },
-      "category_id": { "type": "string" },
-      "created_at": { "type": "string" }
-    },
-    "required": [
-      "id",
-      "available",
-      "name",
-      "description",
-      "daily_rate",
-      "license_plate",
-      "fine_amount",
-      "brand",
-      "category_id",
-      "created_at"
-    ]
-  };
+  test("POST /users should return a valid car object", function () {
+    const schema = {
+      type: "object",
+      required: [
+        "id",
+        "available",
+        "name",
+        "description",
+        "daily_rate",
+        "license_plate",
+        "fine_amount",
+        "brand",
+        "created_at"
+      ],
+      properties: {
+        id: { type: "string", minLength: 1 },
+        available: { type: "boolean" },
+        name: { type: "string" },
+        description: { type: "string" },
+        daily_rate: { type: "number" },
+        license_plate: { type: "string" },
+        fine_amount: { type: "number" },
+        brand: { type: "string" },
+        category_id: { type: "string" },
+        created_at: { type: "string", format: "date-time" }
+      }
+    };
   
-  test("status code", function() {
-    expect(res.getStatus()).to.equal(201);
+    const result = tv4.validateResult(res.getBody(), schema);
+    expect(result.valid, result.error && result.error.message).to.be.true;
   });
   
-  test("verify JSON returns the right schema", function() {
-    const data = res.getBody();
-    const valid = ajv.validate(schema, data);
+  test("car name should match input", function () {
+    const expectedName = bru.getVar("nameCar");
+    const actualName = res.getBody().name;
   
-    if (!valid) {
-      console.log("❌ Schema inválido:", ajv.errors);
-    } else {
-      console.log("✅ Schema válido!");
-    }
-  
-    expect(valid).to.be.true;
+    expect(actualName).to.equal(expectedName);
   });
   
 }

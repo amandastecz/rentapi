@@ -1,7 +1,7 @@
 meta {
   name: Create a category
   type: http
-  seq: 1
+  seq: 2
 }
 
 post {
@@ -29,13 +29,34 @@ assert {
 script:pre-request {
   const { faker } = require('@faker-js/faker');
   
-  // const loginRequest = "Authentication/Login with credentials";
-  // await bru.runRequest(loginRequest);
+  const requestPathName = "Authentication/Refresh Token";
+  await bru.runRequest(
+     requestPathName
+  );
   
   const data = {
-    name: faker.vehicle.type() + faker.number.binary(255),
+    name: faker.vehicle.type() + faker.lorem.word(),
     description: faker.lorem.sentence()
   };
   
   req.setBody(data);
+  
+  
+}
+
+script:post-response {
+  const response = res.body;
+  const requestPathName = "Category/List all categories";
+  
+  if(res.status === 201){
+    const responseGetAllCategories = await bru.runRequest(
+     requestPathName
+  );
+  const allCategories = responseGetAllCategories.data;
+    const lastCategory = allCategories[allCategories.length - 1];
+    bru.setVar("lastCategoryId", lastCategory.id);
+    console.log("Última categoria ID:", lastCategory.id);
+  }else{
+    console.error("A categoria não foi criada, motivo: \n" + res.body.message);
+  }
 }
