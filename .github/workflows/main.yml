@@ -76,7 +76,7 @@ jobs:
 
       - name: Run Bruno API tests
         working-directory: src/api-collection
-        run: bru run . --env local --delay=1800
+        run: bru run --env local --delay=1800
 
       - name: Copy file via ssh key
         uses: appleboy/scp-action@v0.1.4
