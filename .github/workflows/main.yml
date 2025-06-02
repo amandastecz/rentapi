@@ -57,7 +57,10 @@ jobs:
         run: npm install
 
       - name: Check if API is up
-        run: curl --fail http://localhost:3333/sessions || (echo "API is not up!" && exit 1)
+        run: |
+          curl -X POST http://localhost:3333/sessions \
+          -H "Content-Type: application/json" \
+          -d '{"email":"admin@rentapi.com.br","password":"123456"}'
 
       - name: Create Bruno .env file
         working-directory: src/api-collection
