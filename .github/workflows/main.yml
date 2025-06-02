@@ -46,7 +46,7 @@ jobs:
       - name: Wait for Services to Start
         run: sleep 30
 
-      - name: Run unit tests
+      - name: Run unit testsa
         run: yarn test
       
       - name: Install Bruno CLI
@@ -56,13 +56,17 @@ jobs:
         working-directory: src/api-collection
         run: npm install
 
+      - name: Check if API is up
+        run: curl --fail http://localhost:3333/sessions || (echo "API is not up!" && exit 1)
+
       - name: Create Bruno .env file
         working-directory: src/api-collection
         run: |
           touch .env
-          echo "$ENV_FILE" > .env
+          echo "$BRUNO_ENV_FILE" > .env
+          cat .env
         env:
-          ENV_FILE: ${{ secrets.BRUNO_ENV_FILE }}
+          BRUNO_ENV_FILE: ${{ secrets.BRUNO_ENV_FILE }}
 
       - name: Run Bruno API tests
         working-directory: src/api-collection
