@@ -1,0 +1,40 @@
+meta {
+  name: Create a category
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/categories
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "name": "{{name}}",
+    "description": "{{description}}"
+  }
+  
+}
+
+assert {
+  res.status: eq 201
+}
+
+script:pre-request {
+  const { faker } = require('@faker-js/faker');
+  
+  const data = {
+    name: faker.vehicle.type() + faker.lorem.word(),
+    description: faker.lorem.sentence()
+  };
+  
+  req.setBody(data);
+  
+  
+}

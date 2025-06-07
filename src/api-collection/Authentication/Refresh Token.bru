@@ -1,0 +1,30 @@
+meta {
+  name: Refresh Token
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/refresh-token
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "token": "{{refreshToken}}"
+  }
+}
+
+vars:post-response {
+  token: res.body.token
+}
+
+assert {
+  res.status: eq 200
+}
+
+script:pre-request {
+  const loginRequest = "Authentication/Login with credentials";
+  await bru.runRequest(loginRequest);
+}

@@ -1,0 +1,61 @@
+meta {
+  name: List all categories
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/categories
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.length: gt 0
+  res.body[0].id: isDefined
+  res.body[0].created_at: matches ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$
+  res.body[0].description: isString
+}
+
+script:post-response {
+  const data = res.body;
+  const randomCategory = data[Math.floor(Math.random() * data.length)];
+  bru.setVar("categoryId", randomCategory.id);
+}
+
+tests {
+  const tv4 = require("tv4");
+  test("should be able to login", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+  test("should return a non-empty array", function () {
+    expect(res.getBody()).to.be.an("array").that.is.not.empty;
+  });
+  test("each category should have id, name, description and created_at", function () {
+    res.getBody().forEach(cat => {
+      expect(cat).to.have.property("id");
+      expect(cat).to.have.property("name");
+      expect(cat).to.have.property("description");
+      expect(cat).to.have.property("created_at");
+    });
+  });
+  test("response matches JSON schema", function () {
+    const schema = {
+      type: "array",
+      items: {
+        type: "object",
+        required: ["id", "name", "description", "created_at"],
+        properties: {
+          id: { type: "string" },
+          name: { type: "string" },
+          description: { type: "string" },
+          created_at: { type: "string", format: "date-time" }
+        }
+      }
+    };
+  
+    const result = tv4.validateResult(res.getBody(), schema);
+    expect(result.valid).to.be.true;
+  });
+}

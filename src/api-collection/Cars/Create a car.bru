@@ -1,0 +1,104 @@
+meta {
+  name: Create a car
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/cars
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "name": "",
+    "description": "",
+    "daily_rate": "",
+    "license_plate": "",
+    "fine_amount": "",
+    "brand": "",
+    "category_id": ""
+  }
+}
+
+assert {
+  res.status: eq 201
+}
+
+script:pre-request {
+  const { faker } = require('@faker-js/faker');
+  
+  const nameCarValue = faker.vehicle.model();
+  await bru.setVar("nameCar",nameCarValue);
+  const categoryId = bru.getVar("categoryId");
+  
+  const dailyRate = parseFloat(faker.finance.amount());
+  const fineAmount = parseFloat(faker.finance.amount());
+  const data = {
+    name: nameCarValue,
+    description: faker.lorem.words(5),
+    daily_rate: dailyRate,
+    license_plate: faker.string.alphanumeric(6),
+    fine_amount: fineAmount,
+    brand: faker.vehicle.manufacturer(),
+    category_id: categoryId,
+  };
+  
+  req.setBody(data);
+  
+}
+
+script:post-response {
+  
+  
+  
+}
+
+tests {
+  const tv4 = require("tv4");
+  
+  test("POST /users should return a valid car object", function () {
+    const schema = {
+      type: "object",
+      required: [
+        "id",
+        "available",
+        "name",
+        "description",
+        "daily_rate",
+        "license_plate",
+        "fine_amount",
+        "brand",
+        "created_at"
+      ],
+      properties: {
+        id: { type: "string", minLength: 1 },
+        available: { type: "boolean" },
+        name: { type: "string" },
+        description: { type: "string" },
+        daily_rate: { type: "number" },
+        license_plate: { type: "string" },
+        fine_amount: { type: "number" },
+        brand: { type: "string" },
+        category_id: { type: "string" },
+        created_at: { type: "string", format: "date-time" }
+      }
+    };
+  
+    const result = tv4.validateResult(res.getBody(), schema);
+    expect(result.valid, result.error && result.error.message).to.be.true;
+  });
+  
+  test("car name should match input", function () {
+    const expectedName = bru.getVar("nameCar");
+    const actualName = res.getBody().name;
+  
+    expect(actualName).to.equal(expectedName);
+  });
+  
+}
